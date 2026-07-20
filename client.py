@@ -5,7 +5,7 @@ import socket
 from user import User
 
 HOST = "127.0.0.1"
-PORT = 8080
+PORT = 9000
 
 gKey = 2
 pKey = 23
@@ -27,6 +27,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
         msg = input("Client: ")
         if msg == "exit":
             break
-        client.sendall(msg.encode())
+        
+        cryptoMsg = Alice.crypt_message(msg, sA)
+
+        client.sendall(cryptoMsg)
         data = client.recv(1024)
-        print(f"Server: {data.decode()}")
+        encrypted = Alice.encrypt_message(data, sA)
+        print(f"Server: {encrypted}")

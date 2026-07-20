@@ -5,7 +5,7 @@ import socket
 from user import User
 
 HOST = "127.0.0.1"
-PORT = 8080
+PORT = 9000
 
 gKey = 2
 pKey = 23
@@ -32,8 +32,13 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
             data = connection.recv(1024)
             if not data:
                 break
-            print(f"Client: {data.decode()}")
+
+            encrypted = Bob.encrypt_message(data, sB)
+            print(f"Client: {encrypted}")
             reply = input("Server: ")
             if reply == "exit":
                 break
-            connection.sendall(reply.encode())
+
+            cryptoReply = Bob.crypt_message(reply, sB)
+
+            connection.sendall(cryptoReply)
