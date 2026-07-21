@@ -5,7 +5,7 @@ import socket
 from user import User
 
 HOST = "127.0.0.1"
-PORT = 9000
+PORT = 9001 # change to diff for Mellory connection
 
 gKey = 2
 pKey = 23
@@ -40,5 +40,4 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
                 break
 
             cryptoReply = Bob.crypt_message(reply, sB)
-
             connection.sendall(cryptoReply)
